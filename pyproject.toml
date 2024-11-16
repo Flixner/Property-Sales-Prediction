@@ -17,3 +17,9 @@ optional = true
 [tool.poetry.group.dev.dependencies]
 pre-commit = "*"
 black = "*"
+flake8 = "*"
+bandit = "*"
+isort = "*"
+pyupgrade = "*"
+yesqa = "*"
+pycln = "*"
