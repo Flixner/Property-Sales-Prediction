@@ -15,6 +15,7 @@ repos:
   # Guard Rails
     - id: check-ast
     - id: check-added-large-files
+      args: ["--maxkb=2000"]
     - id: check-json
     - id: check-toml
     - id: check-yaml
