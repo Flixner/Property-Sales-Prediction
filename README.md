@@ -3,7 +3,7 @@
 
 ## Installation
 
-Dieses Projekt verwendet [Poetry](https://python-poetry.org/) für das Abhängigkeitsmanagement. Bitte stelle sicher, dass Poetry auf deinem System installiert ist.
+Dieses Projekt verwendet [Poetry](https://python-poetry.org/docs) für das Abhängigkeitsmanagement. Bitte stelle sicher, dass Poetry auf deinem System installiert ist.
 
 Falls pip installiert ist:
 ```bash
