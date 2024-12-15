@@ -14,7 +14,7 @@ plotly = "*"
 matplotlib = "*"
 seaborn = "*"
 geopy = "*"
-sklearn = "*"
+scikit-learn = "*"
 
 [tool.poetry.group.dev]
 optional = true
