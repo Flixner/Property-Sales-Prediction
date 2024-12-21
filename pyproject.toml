@@ -6,15 +6,17 @@ authors = ["Felix Rauterberg <felix-rauterberg@gmx.de>"]
 package-mode = false
 
 [tool.poetry.dependencies]
-python = ">=3.11, <=3.13"
+python = ">=3.11, <3.14"
 pandas = "*"
 pyarrow = "*"
 jupyter = "*"
 plotly = "*"
-matplotlib = "*"
+matplotlib = "<3.10"
 seaborn = "*"
 geopy = "*"
+numpy = ">=2 <2.2"
 scikit-learn = "*"
+icecream = "^2.1.3"
 
 [tool.poetry.group.dev]
 optional = true
