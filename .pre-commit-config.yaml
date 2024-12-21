@@ -92,3 +92,12 @@ repos:
 #  hooks:
 #    - id: pycln
 #      args: [--all]
+
+
+- repo: https://github.com/nbQA-dev/nbQA
+  rev: 1.9.1
+  hooks:
+    - id: nbqa-pyupgrade
+      args: [--py311-plus]
+    - id: nbqa-isort
+      args: ["--float-to-top"]

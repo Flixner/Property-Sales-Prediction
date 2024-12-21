@@ -30,3 +30,4 @@ isort = "*"
 pyupgrade = "*"
 yesqa = "*"
 pycln = "*"
+nbqa = {extras = ["toolchain"], version = "^1.9.1"}
