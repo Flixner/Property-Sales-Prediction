@@ -153,8 +153,6 @@ class SimpleImputerWithNames(SimpleImputer):
         Returns:
             SimpleImputerWithNames: The fitted instance of the imputer.
 
-        Raises:
-            ValueError: If the input data is not a pandas DataFrame or a NumPy array.
         """
         self.feature_names_in_ = X.columns if isinstance(X, pd.DataFrame) else [f"feature_{i}" for i in range(X.shape[1])]
         return super().fit(X, y)
@@ -169,8 +167,6 @@ class SimpleImputerWithNames(SimpleImputer):
         Returns:
             pd.DataFrame | np.ndarray: The transformed data with column names retained (if applicable).
 
-        Raises:
-            ValueError: If the input data is not a pandas DataFrame or a NumPy array.
         """
         result = super().transform(X)
         if isinstance(X, pd.DataFrame):
