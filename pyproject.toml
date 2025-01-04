@@ -17,6 +17,7 @@ geopy = "*"
 numpy = ">=2 <2.2"
 scikit-learn = "*"
 icecream = "^2.1.3"
+requests = "^2.32.3"
 
 [tool.poetry.group.dev]
 optional = true
