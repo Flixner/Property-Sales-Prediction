@@ -99,18 +99,13 @@ def get_features(data: pd.DataFrame) -> tuple[pd.DataFrame, pd.DataFrame, list, 
     return X, y, cat_features, num_features, target
 
 
-def build_preprocessing_pipeline(
-    X: pd.DataFrame, y: pd.DataFrame, cat_features: list, num_features: list, target: str
-) -> ColumnTransformer:
+def build_preprocessing_pipeline(cat_features: list, num_features: list) -> ColumnTransformer:
     """
     Builds a preprocessing pipeline for both categorical and numerical features.
 
     Args:
-        X (pd.DataFrame): The feature data.
-        y (pd.DataFrame): The target data.
         cat_features (list): List of categorical feature names.
         num_features (list): List of numerical feature names.
-        target (str): The target column name.
 
     Returns:
         ColumnTransformer: A transformer object for preprocessing features.
