@@ -13,6 +13,12 @@ import custom_transformers
 
 
 def ic_time_formatter():
+    """
+    Formats and returns the time elapsed since the last call to this function.
+
+    Returns:
+        str: A formatted string representing the elapsed time in seconds.
+    """
     global global_ic_time_formatter_last_start_time
 
     try:
@@ -26,22 +32,64 @@ def ic_time_formatter():
 
 @argumentToString.register(np.ndarray)
 def _(obj):
+    """
+    Custom formatter for NumPy arrays in icecream debug output.
+
+    Args:
+        obj (np.ndarray): The NumPy array to format.
+
+    Returns:
+        str: A string representation of the array's shape and data type.
+    """
     return f"ndarray, shape={obj.shape}, dtype={obj.dtype}"
 
 
 @argumentToString.register(pd.DataFrame)
 def _(obj):
+    """
+    Custom formatter for pandas DataFrames in icecream debug output.
+
+    Args:
+        obj (pd.DataFrame): The DataFrame to format.
+
+    Returns:
+        str: A string representation of the DataFrame's shape.
+    """
     return f"DataFrame, shape={obj.shape}"
 
 
 def load_data(dir_path: str, file_name: str) -> pd.DataFrame:
+    """
+    Loads data from a CSV file into a pandas DataFrame.
+
+    Args:
+        dir_path (str): The directory path containing the file.
+        file_name (str): The name of the file to load.
+
+    Returns:
+        pd.DataFrame: The loaded data.
+    """
     file_path = os.path.join(dir_path, file_name)
     return pd.read_csv(file_path)
 
 
 def get_features(data: pd.DataFrame) -> tuple[pd.DataFrame, pd.DataFrame, list, list, str]:
-    cat_features = ["PropType"]  # , "District", "Style"]
-    num_features = ["Stories", "Year_Built", "Units", "FinishedSqft"]  # , "CondoProject"]
+    """
+    Extracts features and target columns from the data.
+
+    Args:
+        data (pd.DataFrame): The input data.
+
+    Returns:
+        tuple: A tuple containing:
+            - X (pd.DataFrame): The feature columns.
+            - y (pd.DataFrame): The target column.
+            - cat_features (list): List of categorical feature names.
+            - num_features (list): List of numerical feature names.
+            - target (str): The target column name.
+    """
+    cat_features = ["PropType"]
+    num_features = ["Stories", "Year_Built", "Units", "FinishedSqft"]
     features = cat_features + num_features
     target = "Sale_price"
 
@@ -54,6 +102,19 @@ def get_features(data: pd.DataFrame) -> tuple[pd.DataFrame, pd.DataFrame, list, 
 def build_preprocessing_pipeline(
     X: pd.DataFrame, y: pd.DataFrame, cat_features: list, num_features: list, target: str
 ) -> ColumnTransformer:
+    """
+    Builds a preprocessing pipeline for both categorical and numerical features.
+
+    Args:
+        X (pd.DataFrame): The feature data.
+        y (pd.DataFrame): The target data.
+        cat_features (list): List of categorical feature names.
+        num_features (list): List of numerical feature names.
+        target (str): The target column name.
+
+    Returns:
+        ColumnTransformer: A transformer object for preprocessing features.
+    """
     numeric_preprocessor = Pipeline(
         [
             ("imputation_mean", SimpleImputer(missing_values=np.nan, strategy="mean")),
@@ -82,6 +143,12 @@ def build_preprocessing_pipeline(
 
 
 def main():
+    """
+    Main function to execute the preprocessing pipeline on input data.
+
+    Loads the data, extracts features, builds a preprocessing pipeline, and applies it.
+    Outputs the results using the icecream debug tool.
+    """
     ic.configureOutput(prefix=ic_time_formatter)
 
     ic("\n------Start Main------\n")
