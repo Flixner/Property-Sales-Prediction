@@ -71,7 +71,7 @@ class RareTransformer(BaseEstimator, TransformerMixin):
         """
         X = self._ensure_dataframe(X)
         X = X.astype(str)
-        X_transformed = X.applymap(self._replace_low_frequency)
+        X_transformed = X.map(self._replace_low_frequency)
         return X_transformed if isinstance(X, pd.DataFrame) else X_transformed.to_numpy()
 
     def _replace_low_frequency(self, value: str) -> str:
@@ -191,3 +191,29 @@ class SimpleImputerWithNames(SimpleImputer):
         if self.feature_names_in_ is None:
             raise ValueError("The transformer must be fitted before calling `get_feature_names_out`.")
         return self.feature_names_in_
+
+    def get_params(self, deep: bool = True) -> dict:
+        """
+        Returns the parameters of the transformer for cloning.
+
+        Args:
+            deep (bool): Whether to return parameters of sub-objects.
+
+        Returns:
+            dict: A dictionary of parameters.
+        """
+        params = super().get_params(deep)
+        return params
+
+    def set_params(self, **params) -> "SimpleImputerWithNames":
+        """
+        Sets the parameters of the transformer.
+
+        Args:
+            **params: Parameters to set.
+
+        Returns:
+            SimpleImputerWithNames: The transformer instance.
+        """
+        super().set_params(**params)
+        return self
