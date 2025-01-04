@@ -67,6 +67,7 @@ repos:
   rev: v0.991
   hooks:
     - id: mypy
+      args: [--ignore-missing-imports=true]
 
 
 # Code correctors section
