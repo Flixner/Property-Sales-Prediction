@@ -22,5 +22,3 @@ Um die Abhängigkeiten zu installieren, ohne eine virtuelle Umgebung zu erstelle
     ```bash
     poetry install
     ```
-
-

@@ -4,12 +4,14 @@ import time
 import numpy as np
 import pandas as pd
 from icecream import argumentToString, ic
+from sale_prediction import custom_transformers
 from sklearn.compose import ColumnTransformer
 from sklearn.impute import SimpleImputer
-from sklearn.pipeline import Pipeline
+from sklearn.linear_model import LinearRegression
+from sklearn.model_selection import GridSearchCV, train_test_split
+from sklearn.pipeline import Pipeline, make_pipeline
 from sklearn.preprocessing import OneHotEncoder, StandardScaler
-
-import custom_transformers
+from sklearn.tree import DecisionTreeRegressor
 
 
 def ic_time_formatter():
@@ -137,6 +139,23 @@ def build_preprocessing_pipeline(cat_features: list, num_features: list) -> Colu
     return preprocessor
 
 
+def train_linear_regression(pipeline: Pipeline, X: pd.DataFrame, y: pd.DataFrame) -> Pipeline:
+    pipeline = make_pipeline(pipeline, LinearRegression())
+    pipeline.fit(X, y)
+    return pipeline
+
+
+def train_decision_tree_regression(pipeline: Pipeline, X: pd.DataFrame, y: pd.DataFrame) -> Pipeline:
+    pipeline = make_pipeline(pipeline, DecisionTreeRegressor())
+
+    param_grid = {"decisiontreeregressor__max_depth": [5, 7, 9, None]}
+
+    pipeline = GridSearchCV(pipeline, param_grid=param_grid)
+    ic(pipeline.fit(X, y))
+    ic(pipeline.best_params_)
+    return pipeline
+
+
 def main():
     """
     Main function to execute the preprocessing pipeline on input data.
@@ -144,7 +163,7 @@ def main():
     Loads the data, extracts features, builds a preprocessing pipeline, and applies it.
     Outputs the results using the icecream debug tool.
     """
-    ic.configureOutput(prefix=ic_time_formatter)
+    ic.configureOutput(prefix=ic_time_formatter, includeContext=True)
 
     ic("\n------Start Main------\n")
 
@@ -154,10 +173,16 @@ def main():
     data = ic(load_data(DATA_PATH, FILE_NAME))
 
     X, y, CAT_FEATURES, NUM_FEATURES, TARGET = get_features(data)
+    X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=8)
 
-    pipeline = ic(build_preprocessing_pipeline(X, y, CAT_FEATURES, NUM_FEATURES, TARGET))
+    pipeline = build_preprocessing_pipeline(CAT_FEATURES, NUM_FEATURES)
 
-    ic(pipeline.fit_transform(X, y))
+    # lin_pipe = train_linear_regression(pipeline, X=X_train, y=y_train)
+
+    # ic(lin_pipe.score(X_test, y_test))
+
+    dec_tree_pipe = train_decision_tree_regression(pipeline, X=X_train, y=y_train)
+    ic(dec_tree_pipe.score(X_test, y_test))
 
 
 if __name__ == "__main__":
