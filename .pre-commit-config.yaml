@@ -99,7 +99,7 @@ repos:
     - id: nbqa-pyupgrade
       args: [--py311-plus]
     - id: nbqa-isort
-      args: ["--float-to-top"]
+      args: ["--float-to-top", "--profile=black"]
     - id: nbqa-black
       language_version: python3.13
       args: ["--line-length=128"]
